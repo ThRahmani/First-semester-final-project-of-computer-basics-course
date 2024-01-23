@@ -10,3 +10,14 @@ class LCG:
         return self.state / float(self.m)
 
 
+def generate_decimal_random_from_a_to_b(a: float, b: float):
+    seed_value = abs(hash(str(a + b)))
+    lcg_generator = LCG(seed=seed_value)
+    return lcg_generator.generate_random() * (b - a) + a
+
+
+def generate_random_from_a_to_b(a: float, b: float):
+    seed_value = abs(hash(str(a + b)))
+    lcg_generator = LCG(seed=seed_value)
+    if a <= int(lcg_generator.generate_random() * (b - a) + a) <= b:
+        return int(lcg_generator.generate_random() * (b - a) + a)
