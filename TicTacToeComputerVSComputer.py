@@ -12,20 +12,20 @@ game_state = list({
     '8': 8,
     '9': 9
 })
-print(game_state)
+
 computer = LCG(seed=abs(hash('computer')))
 player = LCG(seed=abs(hash('player')))
 chance = True
 
 win = [
-    list('123'),
-    list('456'),
-    list('789'),
-    list('147'),
-    list('258'),
-    list('369'),
-    list('159'),
-    list('357')
+    ['1','2','3'],
+    ['4','5','6'],
+    ['7','8','9'],
+    ['1','4','7'],
+    ['2','5','8'],
+    ['3','6','9'],
+    ['1','5','9'],
+    ['3','5','7']
 ]
 
 seed_value = abs(hash('starter'))
@@ -40,6 +40,11 @@ c1 = ''
 c2 = ''
 result = True
 
+
+def win_checker(win:list, state:list):
+    return win[0] in state and win[1] in state and win[2] in state
+
+
 if chance:  # computer will start
     print('computer 1 will start')
 
@@ -48,15 +53,7 @@ if chance:  # computer will start
             c1_choice = int((computer.generate_random())*(10-i) + 1)
             c1 = c1 + str(game_state[c1_choice])
             game_state.pop(c1_choice)
-            if i == 5 and list(c1) in win:
-                print('computer 1 wins')
-                result = not result
-                break
-            elif i == 7 and (list(c1[:3]) in win or list(c1[1:]) in win):
-                print('computer 1 wins')
-                result = not result
-                break
-            elif i == 9 and (list(c1[:3]) in win or list(c1[1:4]) in win or list(c1[2:]) in win):
+            if win_checker(win[0], c1) or win_checker(win[1], c1) or win_checker(win[2], c1) or win_checker(win[3], c1) or win_checker(win[4], c1) or win_checker(win[5], c1) or win_checker(win[6], c1) or win_checker(win[7], c1):
                 print('computer 1 wins')
                 result = not result
                 break
@@ -65,11 +62,7 @@ if chance:  # computer will start
             c2_choice = int((player.generate_random())*(10-i) + 1)
             c2 = c2 + str(game_state[c2_choice])
             game_state.pop(c2_choice)
-            if i == 6 and list(c2) in win:
-                print('computer 2 wins')
-                result = not result
-                break
-            elif i == 6 and (list(c2[:3]) in win or list(c2[1:]) in win):
+            if win_checker(win[0], c2) or win_checker(win[1], c2) or win_checker(win[2], c2) or win_checker(win[3], c2) or win_checker(win[4], c2) or win_checker(win[5], c2) or win_checker(win[6], c2) or win_checker(win[7], c2):
                 print('computer 2 wins')
                 result = not result
                 break
@@ -83,11 +76,7 @@ else:   # player will start
             c1_choice = int(computer.generate_random()*(10-i) + 1)
             c1 = c1 + str(game_state[c1_choice])
             game_state.pop(c1_choice)
-            if i == 6 and list(c1) in win:
-                print('computer 1 wins')
-                result = not result
-                break
-            elif i == 6 and (list(c1[:3]) in win or list(c1[1:]) in win):
+            if win_checker(win[0], c1) or win_checker(win[1], c1) or win_checker(win[2], c1) or win_checker(win[3], c1) or win_checker(win[4], c1) or win_checker(win[5], c1) or win_checker(win[6], c1) or win_checker(win[7], c1):
                 print('computer 1 wins')
                 result = not result
                 break
@@ -95,22 +84,14 @@ else:   # player will start
             c2_choice = int(player.generate_random()*(10-i) + 1)
             c2 = c2 + str(game_state[c2_choice])
             game_state.pop(c2_choice)
-            if i == 5 and list(c2) in win:
+            if win_checker(win[0], c2) or win_checker(win[1], c2) or win_checker(win[2], c2) or win_checker(win[3], c2) or win_checker(win[4], c2) or win_checker(win[5], c2) or win_checker(win[6], c2) or win_checker(win[7], c2):
                 print('computer 2 wins')
                 result = not result
                 break
-            elif i == 7 and (list(c2[:3]) in win or list(c2[1:]) in win):
-                print('computer 2 wins')
-                result = not result
-                break
-            elif i == 9 and (list(c2[:3]) in win or list(c2[1:4]) in win or list(c2[2:]) in win):
-                print('computer 2 wins')
-                result = not result
-                break   
 
 print(c1)
 print(c2)
-
+# print(set(['7','8','9']) in set(['7', '8', '9', '4', '1']))
 if not result:
     pass
 else:
